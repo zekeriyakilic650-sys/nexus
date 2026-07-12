@@ -1,27 +1,46 @@
-import os
-import webbrowser
-import time
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otomatik Link Açıcı</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 50px; background: #f4f4f9; }
+        .btn { background: #007bff; color: white; padding: 15px 30px; border: none; border-radius: 5px; font-size: 18px; cursor: pointer; }
+        .btn:hover { background: #0056b3; }
+        #log { margin-top: 20px; color: #555; }
+    </style>
+</head>
+<body>
 
-def linkleri_oku_ve_ac(dosya_yolu):
-    # Dosyanın var olup olmadığını kontrol edelim
-    if not os.path.exists(dosya_yolu):
-        print(f"Hata: '{dosya_yolu}' dosyası bulunamadı.")
-        return
-
-    print("Dosya okunuyor ve linkler açılıyor...")
+    <h1>Otomatik Link Açıcı Sayfası</h1>
+    <p>Aşağıdaki butona bastığınızda reklam ve hedef linkler sırayla açılacaktır.</p>
     
-    with open(dosya_yolu, 'r', encoding='utf-8') as dosya:
-        for satir in dosya:
-            link = satir.strip()
-            # Satırın boş olmadığını ve geçerli bir link yapısında olduğunu kontrol edelim
-            if link and (link.startswith("http://") or link.startswith("https://")):
-                print(f"Açılıyor: {link}")
-                webbrowser.open(link)
-                # İşletim sisteminin ve tarayıcının kilitlenmemesi için kısa bir duraklama
-                time.sleep(1)
+    <!-- AÇILMASINI İSTEDİĞİNİZ LİNKLERİ BURAYA YAZIN -->
+    <button class="btn" onclick="linkleriAc()">Linkleri Açmayı Başlat</button>
+    
+    <div id="log"></div>
 
-if __name__ == "__main__":
-    # Okunacak dosyanın adı
-    hedef_dosya = "linkler.txt"
-    linkleri_oku_ve_ac(hedef_dosya)
+    <script>
+        // Python kodundaki "linkler.txt" yerine linklerinizi bu listenin içine yazın:
+        const linkler = [
+            "https://google.com",
+            "https://github.com",
+            "https://sizinreklamlinkiniz.com" // Kendi reklam veya hedef linklerinizi buraya ekleyin
+        ];
 
+        function linkleriAc() {
+            let logDiv = document.getElementById("log");
+            logDiv.innerHTML = "Linkler sırayla açılıyor...<br>";
+
+            linkler.forEach((link, index) => {
+                setTimeout(() => {
+                    logDiv.innerHTML += `Açılıyor: ${link}<br>`;
+                    window.open(link, '_blank');
+                }, index * 1500); // Tarayıcının kilitlenmemesi için 1.5 saniye arayla açar
+            });
+        }
+    </script>
+
+</body>
+</html>
