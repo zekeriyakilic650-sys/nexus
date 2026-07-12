@@ -1,1 +1,27 @@
+import os
+import webbrowser
+import time
+
+def linkleri_oku_ve_ac(dosya_yolu):
+    # Dosyanın var olup olmadığını kontrol edelim
+    if not os.path.exists(dosya_yolu):
+        print(f"Hata: '{dosya_yolu}' dosyası bulunamadı.")
+        return
+
+    print("Dosya okunuyor ve linkler açılıyor...")
+    
+    with open(dosya_yolu, 'r', encoding='utf-8') as dosya:
+        for satir in dosya:
+            link = satir.strip()
+            # Satırın boş olmadığını ve geçerli bir link yapısında olduğunu kontrol edelim
+            if link and (link.startswith("http://") or link.startswith("https://")):
+                print(f"Açılıyor: {link}")
+                webbrowser.open(link)
+                # İşletim sisteminin ve tarayıcının kilitlenmemesi için kısa bir duraklama
+                time.sleep(1)
+
+if __name__ == "__main__":
+    # Okunacak dosyanın adı
+    hedef_dosya = "linkler.txt"
+    linkleri_oku_ve_ac(hedef_dosya)
 
